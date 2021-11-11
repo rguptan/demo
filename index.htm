@@ -2,9 +2,8 @@
 <html>
   <head>
     <title>AirTable Data Demo</title>
-    <script src="https://raw.githubusercontent.com/Airtable/airtable.js/master/build/airtable.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/airtable@0.11.1/lib/airtable.min.js"></script>
     <script>
-      var Airtable = require('airtable');
       var base = new Airtable({apiKey: 'keysWGH0o5JrM7hbk'}).base('appQkrRqYFHIaSYlW');
 
       base('Grid view').select({
