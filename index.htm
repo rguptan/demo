@@ -6,6 +6,7 @@
     <script src="airtable.browser.js"></script>
     <script>
       function afterLoad(){
+        var Airtable = require('airtable.browser');
         var base = new Airtable({apiKey: 'keysWGH0o5JrM7hbk'}).base('appQkrRqYFHIaSYlW');
 
         base('Grid view').select({
