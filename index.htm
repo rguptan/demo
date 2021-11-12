@@ -14,11 +14,13 @@
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             // This function (`page`) will get called for each page of records.
-
+            let content = '';
             records.forEach(function(record) {
+              content += '<button class="btn btn-primary" type="button">'+record.get('Name')+'</button>'
+              
                 console.log('Retrieved', record.get('Name'));
             });
-
+            document.getElementById("app").innerHTML = content;
             // To fetch the next page of records, call `fetchNextPage`.
             // If there are more records, `page` will get called again.
             // If there are no more records, `done` will get called.
