@@ -16,11 +16,11 @@
             // This function (`page`) will get called for each page of records.
             let content = '';
             records.forEach(function(record) {
-              content += '<button class="btn btn-primary" type="button">'+record.get('Name')+'</button>'
+              content += '<button class="btn btn-primary mb-3" type="button">'+record.get('Name')+'</button>'
               
                 console.log('Retrieved', record.get('Name'));
             });
-            document.getElementById("app").innerHTML = content;
+            document.getElementById("content").innerHTML = content;
             // To fetch the next page of records, call `fetchNextPage`.
             // If there are more records, `page` will get called again.
             // If there are no more records, `done` will get called.
@@ -32,11 +32,10 @@
       </script>
   </head>
   <body>
-    <div id="app">
-      <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="button">Button</button>
-        <button class="btn btn-primary" type="button">Button</button>
+    <div class="container">
+      <div id="content">
+
       </div>
-    </div>
+    </div>  
   </body>
 </html>
