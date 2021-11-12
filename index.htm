@@ -5,13 +5,12 @@
     <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
     <script src="airtable.browser.js"></script>
     <script>
-      function afterLoad(){
         var Airtable = require('airtable');
         var base = new Airtable({apiKey: 'keysWGH0o5JrM7hbk'}).base('appQkrRqYFHIaSYlW');
 
         base('Grid view').select({
-            // Selecting the first 3 records in Grid view:
-            maxRecords: 3,
+            // Selecting the first 10 records in Grid view:
+            maxRecords: 10,
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
             // This function (`page`) will get called for each page of records.
@@ -28,10 +27,9 @@
         }, function done(err) {
             if (err) { console.error(err); return; }
         });
-      };
       </script>
   </head>
-  <body onload="afterLoad();">
+  <body>
     <div id="app">
     </div>
   </body>
