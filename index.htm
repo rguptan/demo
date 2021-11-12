@@ -4,7 +4,7 @@
     <title>AirTable Data Demo</title>
     <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
     <script src="airtable.browser.js"></script>
-    <script onload="afterLoad();" >
+    <script>
       function afterLoad(){
         var base = new Airtable({apiKey: 'keysWGH0o5JrM7hbk'}).base('appQkrRqYFHIaSYlW');
 
@@ -30,7 +30,7 @@
       };
       </script>
   </head>
-  <body>
+  <body onload="afterLoad();">
     <div id="app">
     </div>
   </body>
