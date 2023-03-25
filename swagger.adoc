@@ -1,0 +1,1684 @@
+= Claims Details Service
+team@openapitools.org
+1.7.3
+:toc: left
+:numbered:
+:toclevels: 3
+:source-highlighter: highlightjs
+:keywords: openapi, rest, Claims Details Service
+:specDir: 
+:snippetDir: 
+:generator-template: v1 2019-12-20
+:info-url: https://openapi-generator.tech
+:app-name: Claims Details Service
+
+[abstract]
+.Abstract
+The claims details service provide the ability to providers, enrollees, contact center agents, and benefit administrators to fetch claim details based on the claim id.  The claims search service provides the ability to search for claims based on various search criteria�??s.
+
+
+// markup not found, no include::{specDir}intro.adoc[opts=optional]
+
+
+
+== Endpoints
+
+
+[.ClaimsDetailAPI]
+=== ClaimsDetailAPI
+
+
+[.getClaimDetailsUsingGET]
+==== getClaimDetailsUsingGET
+
+`GET /enrollee/claims/{claimId}`
+
+Get the Claims Details
+
+===== Description
+
+Retrieves the Claims Detail by Claim Id.
+
+
+// markup not found, no include::{specDir}enrollee/claims/\{claimId\}/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+====== Path Parameters
+
+[cols="2,3,1,1,1"]
+|===
+|Name| Description| Required| Default| Pattern
+
+| claimId
+| ID of the claim. This is a required field. 
+| X
+| null
+| 
+
+|===
+
+
+
+====== Header Parameters
+
+[cols="2,3,1,1,1"]
+|===
+|Name| Description| Required| Default| Pattern
+
+| tin
+| Taxpayer Identification Number. This is an optional field, if given it can be provided with the time period. 
+| -
+| null
+| 
+
+|===
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===
+|Name| Description| Required| Default| Pattern
+
+| brand
+| Brand is an optional field. Possible values are DDINS, Dentegra and Deltacare. 
+| -
+| null
+| 
+
+| contract
+| Contract. This is an optional field. If given it should be provided with Brand DDINS. Possible values are FFS and Medicaid. 
+| -
+| null
+| 
+
+| practiceLocationId
+| ID of the practice location. This is an optional field. 
+| -
+| null
+| 
+
+| renderingProviderId
+| ID of the rendering provider. It is an optional field, if given it should be provided with the practice location ID 
+| -
+| null
+| 
+
+|===
+
+
+===== Return Type
+
+<<Claim>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===
+| Code | Message | Datatype
+
+
+| 200
+| Successfully searched for Results
+|  <<Claim>>
+
+
+| 400
+| Invalid Request
+|  <<ServiceError>>
+
+
+| 401
+| Unauthorized
+|  <<>>
+
+
+| 403
+| Forbidden
+|  <<>>
+
+
+| 404
+| Claims details doesn\\u0027t exist
+|  <<ServiceError>>
+
+
+| 500
+| Internal Server error
+|  <<ServiceError>>
+
+|===
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}enrollee/claims/\{claimId\}/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}enrollee/claims/\{claimId\}/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :enrollee/claims/{claimId}/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}enrollee/claims/\{claimId\}/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.ClaimsSearchAPI]
+=== ClaimsSearchAPI
+
+
+[.getClaimsSearchUsingGET]
+==== getClaimsSearchUsingGET
+
+`GET /enrollee/claims`
+
+Get the list of Claims information
+
+===== Description
+
+Retrieves the list of claims based on the search criteria.   **Indicate \\u0027true\\u0027 for claim-ids-only to retrieve the list of claim ids based on the practice location id and TIN. Optional fields for claim ids list are rendering provider id, claim status codes, claim transaction type, claim id (minimum of 4 characters), patient name (minimum of 3 characters), brand, contract, time period, and request type.  1. Practice location id and TIN. Optional fields that can be added are rendering provider id, brand, contract, and time period.  2. Practice location id and TIN. Optional fields that can be added are rendering provider id, patient name (first name and last name), claim status, claim transaction type, brand, contract, and claim date of service or time period. 3. Payment reference number. 4. TIN and time period (optional). 5. Practice location id and TIN. Optional fields that can be added are rendering provider id, claim id, claim transaction type, brand, and contract. 6. Claim id and time period (optional). 7. Comma separated Claim id list and time period (optional). 8. Enrollee id (required). Optional fields that can be added are practice location id, TIN, rendering provider id, brand, contract, and time period.
+
+
+// markup not found, no include::{specDir}enrollee/claims/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+====== Header Parameters
+
+[cols="2,3,1,1,1"]
+|===
+|Name| Description| Required| Default| Pattern
+
+| enrolleeId
+| ID of the enrollee. This is an optional field, if given it can be provided with the effective date. 
+| -
+| null
+| 
+
+| tin
+| Taxpayer Identification Number. This is an optional field, if given it can be provided with the practice location ID and/or enrollee ID. 
+| -
+| null
+| 
+
+|===
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===
+|Name| Description| Required| Default| Pattern
+
+| brand
+| Brand is an optional field. Possible values are DDINS, Dentegra and Deltacare. 
+| -
+| null
+| 
+
+| claim-ids-only
+| Indicate if claim ids only. This is an optional field, if true it should be provided with the practice location id. 
+| -
+| null
+| 
+
+| claimDateOfService
+| Denotes the claim�??s date of service. Date format is mm/dd/yyyy. This is an optional field, if given it should be provided with the practice location ID and TIN. This field takes precedence over time period. 
+| -
+| null
+| 
+
+| claimId
+| ID of the claim. This is an optional field, if given it can be provided with the time period. 
+| -
+| null
+| 
+
+| claimIds
+| Comma separated list of claim ids. This is an optional field, if given it can be provided with the time period. 
+| -
+| null
+| 
+
+| claimStatus
+| Denotes the status of a claim. It is an optional field, if given it should be provided with the practice location ID and TIN. 
+| -
+| null
+| 
+
+| claimStatusCodes
+| Code of the claim status. It is an optional field. If passed it should be provided if claim-ids-only is true. 
+| -
+| null
+| 
+
+| claimTransactionType
+| Denotes the type of claim transaction. It is an optional field, if given it should be provided with the practice location ID and TIN. 
+| -
+| null
+| 
+
+| contract
+| Contract. This is an optional field. If given it should be provided with Brand DDINS. Possible values are FFS and Medicaid. 
+| -
+| null
+| 
+
+| effectiveDate
+| An effective date is the date upon which claims information is filtered. Date format is mm/dd/yyyy. This is an optional field, if given it should be provided with the enrollee ID. 
+| -
+| null
+| 
+
+| pageNumber
+| Number of the page. 
+| -
+| null
+| 
+
+| pageSize
+| Size of the page. 
+| -
+| null
+| 
+
+| patientName
+| Patient�??s name (first and last name). This is an optional field, if given it should be provided with the practice location ID and TIN. 
+| -
+| null
+| 
+
+| paymentReferenceNumber
+| ID of the payment. This is an optional field. 
+| -
+| null
+| 
+
+| practiceLocationId
+| ID of the practice location. This is an optional field, if given it should be provided with TIN and/or enrollee ID. 
+| -
+| null
+| 
+
+| renderingProviderId
+| ID of the rendering provider. It is an optional field, if given it should be provided with the practice location ID and or enrollee ID. 
+| -
+| null
+| 
+
+| requestType
+| Indicate if list of claim ids or patient names. If given it should be provided when claim-ids-only is true. Possible values are \\u0027id\\u0027 and \\u0027patient name\\u0027 
+| -
+| null
+| 
+
+| timePeriod
+| The time period is the time upon which claims information is filtered. The time format is in months. This is an optional field. 
+| -
+| null
+| 
+
+|===
+
+
+===== Return Type
+
+<<ClaimsSearch>>
+
+
+===== Content Type
+
+* */*
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===
+| Code | Message | Datatype
+
+
+| 200
+| Successfully searched for Results
+|  <<ClaimsSearch>>
+
+
+| 204
+| No data found for the request
+|  <<ServiceError>>
+
+
+| 400
+| Invalid Request
+|  <<ServiceError>>
+
+
+| 401
+| Unauthorized
+|  <<>>
+
+
+| 403
+| Forbidden
+|  <<>>
+
+
+| 404
+| Claims list doesn\\u0027t exist
+|  <<ServiceError>>
+
+
+| 500
+| Internal Server error
+|  <<ServiceError>>
+
+|===
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}enrollee/claims/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}enrollee/claims/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :enrollee/claims/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}enrollee/claims/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[#models]
+== Models
+
+
+[#Address]
+=== _Address_ Address
+
+
+
+[.fields-Address]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| city
+| 
+| String 
+| 
+|  
+
+| line1
+| 
+| String 
+| 
+|  
+
+| line2
+| 
+| String 
+| 
+|  
+
+| state
+| 
+| String 
+| 
+|  
+
+| zipCode
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#Amount]
+=== _Amount_ Amount
+
+
+
+[.fields-Amount]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| allowedAmount
+| 
+| String 
+| 
+|  
+
+| approvedAmount
+| 
+| String 
+| 
+|  
+
+| chargedAmount
+| 
+| String 
+| 
+|  
+
+| coinsuranceAmount
+| 
+| String 
+| 
+|  
+
+| contractBenefitLevel
+| 
+| String 
+| 
+|  
+
+| copayAmount
+| 
+| String 
+| 
+|  
+
+| deductibleAmount
+| 
+| String 
+| 
+|  
+
+| deltaPaidAmount
+| 
+| String 
+| 
+|  
+
+| interestPaidAmount
+| 
+| String 
+| 
+|  
+
+| notCoveredAmount
+| 
+| String 
+| 
+|  
+
+| paidByOtherPlanAmount
+| 
+| String 
+| 
+|  
+
+| patientPaidAmount
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#BillingProvider]
+=== _BillingProvider_ BillingProvider
+
+
+
+[.fields-BillingProvider]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| businessName
+| 
+| String 
+| 
+|  
+
+| contacts
+| 
+| Contacts 
+| 
+|  
+
+| id
+| 
+| String 
+| 
+|  
+
+| npi
+| 
+| String 
+| 
+|  
+
+| taxId
+| 
+| String 
+| 
+|  
+
+| validIdentifier
+| 
+| String 
+| 
+|  
+
+| validIdentifierType
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#BusinessLevels]
+=== _BusinessLevels_ BusinessLevels
+
+
+
+[.fields-BusinessLevels]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| groupTypeIdentifier
+| 
+| String 
+| 
+|  
+
+| healthCareContractHolderIdentifier
+| 
+| String 
+| 
+|  
+
+| networkId
+| 
+| String 
+| 
+|  
+
+| product
+| 
+| String 
+| 
+|  
+
+| state
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#Claim]
+=== _Claim_ Claim
+
+
+
+[.fields-Claim]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| ids
+| 
+| List  of <<object>>
+| 
+|  
+
+|===
+
+
+[#Claims]
+=== _Claims_ Claims
+
+
+
+[.fields-Claims]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| claimId
+| 
+| String 
+| 
+|  
+
+| dateOfServiceEndDate
+| 
+| String 
+| 
+|  
+
+| dateOfServiceStartDate
+| 
+| String 
+| 
+|  
+
+| patient
+| 
+| Patient 
+| 
+|  
+
+| paymentReferenceNumber
+| 
+| String 
+| 
+|  
+
+| paymentSummary
+| 
+| PaymentSummary 
+| 
+|  
+
+| procedureCountByStatus
+| 
+| ProcedureCountByStatus 
+| 
+|  
+
+| processedDate
+| 
+| String 
+| 
+|  
+
+| receivedDate
+| 
+| String 
+| 
+|  
+
+| renderingProvider
+| 
+| RenderingProvider 
+| 
+|  
+
+| statusCode
+| 
+| String 
+| 
+|  
+
+| statusCodeDescription
+| 
+| String 
+| 
+|  
+
+| statusDate
+| 
+| String 
+| 
+|  
+
+| subscriber
+| 
+| Subscriber 
+| 
+|  
+
+| treatmentProcedureClasses
+| 
+| String 
+| 
+|  
+
+| type
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#ClaimsSearch]
+=== _ClaimsSearch_ ClaimsSearch
+
+
+
+[.fields-ClaimsSearch]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| claim
+| 
+| Claim 
+| 
+|  
+
+| claims
+| 
+| List  of <<Claims>>
+| 
+|  
+
+| criteria
+| 
+| Criteria 
+| 
+|  
+
+| pagination
+| 
+| Pagination 
+| 
+|  
+
+| patient
+| 
+| Patient 
+| 
+|  
+
+| suppressionPrecedence
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#Contacts]
+=== _Contacts_ Contacts
+
+
+
+[.fields-Contacts]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| address
+| 
+| Address 
+| 
+|  
+
+| phoneNumber
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#Criteria]
+=== _Criteria_ Criteria
+
+
+
+[.fields-Criteria]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| brand
+| 
+| String 
+| 
+|  
+
+| claimDateOfService
+| 
+| String 
+| 
+|  
+
+| claimId
+| 
+| String 
+| 
+|  
+
+| claimStatus
+| 
+| String 
+| 
+|  
+
+| claimStatusCodes
+| 
+| String 
+| 
+|  
+
+| claimTransactionType
+| 
+| String 
+| 
+|  
+
+| contract
+| 
+| String 
+| 
+|  
+
+| patientId
+| 
+| String 
+| 
+|  
+
+| patientName
+| 
+| String 
+| 
+|  
+
+| paymentReferenceNumber
+| 
+| String 
+| 
+|  
+
+| practiceLocationId
+| 
+| String 
+| 
+|  
+
+| renderingProviderId
+| 
+| String 
+| 
+|  
+
+| requestType
+| 
+| String 
+| 
+|  
+
+| timePeriod
+| 
+| Integer 
+| 
+| int32 
+
+| tin
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#ExplanationCode]
+=== _ExplanationCode_ ExplanationCode
+
+
+
+[.fields-ExplanationCode]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| code
+| 
+| String 
+| 
+|  
+
+| description
+| 
+| String 
+| 
+|  
+
+| overrideStatus
+| 
+| String 
+| 
+|  
+
+| sequenceNumber
+| 
+| String 
+| 
+|  
+
+| type
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#Pagination]
+=== _Pagination_ Pagination
+
+
+
+[.fields-Pagination]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| pageNumber
+| 
+| Integer 
+| 
+| int32 
+
+| pageSize
+| 
+| Integer 
+| 
+| int32 
+
+| totalPages
+| 
+| Integer 
+| 
+| int32 
+
+| totalRecords
+| 
+| Integer 
+| 
+| int32 
+
+|===
+
+
+[#Patient]
+=== _Patient_ Patient
+
+
+
+[.fields-Patient]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| names
+| 
+| List  of <<object>>
+| 
+|  
+
+|===
+
+
+[#Payment]
+=== _Payment_ Payment
+
+
+
+[.fields-Payment]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| accountsPayableCode
+| 
+| String 
+| 
+|  
+
+| checkDate
+| 
+| String 
+| 
+|  
+
+| checkNumber
+| 
+| String 
+| 
+|  
+
+| paidTo
+| 
+| String 
+| 
+|  
+
+| paidToCode
+| 
+| String 
+| 
+|  
+
+| payeeAddress
+| 
+| Address 
+| 
+|  
+
+| paymentAmount
+| 
+| String 
+| 
+|  
+
+| paymentDate
+| 
+| String 
+| 
+|  
+
+| paymentReferenceNumber
+| 
+| String 
+| 
+|  
+
+| paymentStatus
+| 
+| String 
+| 
+|  
+
+| paymentStatusDate
+| 
+| String 
+| 
+|  
+
+| paymentType
+| 
+| String 
+| 
+|  
+
+| taxId
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#PaymentSummary]
+=== _PaymentSummary_ PaymentSummary
+
+
+
+[.fields-PaymentSummary]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| totalAllowedAmount
+| 
+| String 
+| 
+|  
+
+| totalApprovedAmount
+| 
+| String 
+| 
+|  
+
+| totalChargedAmount
+| 
+| String 
+| 
+|  
+
+| totalDeductibleAmount
+| 
+| String 
+| 
+|  
+
+| totalDeltaPaidAmount
+| 
+| String 
+| 
+|  
+
+| totalNotCoveredAmount
+| 
+| String 
+| 
+|  
+
+| totalPaidByOtherPlanAmount
+| 
+| String 
+| 
+|  
+
+| totalPatientPaidAmount
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#ProcedureCountByStatus]
+=== _ProcedureCountByStatus_ ProcedureCountByStatus
+
+
+
+[.fields-ProcedureCountByStatus]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| denied
+| 
+| String 
+| 
+|  
+
+| fixable
+| 
+| String 
+| 
+|  
+
+| nonFixable
+| 
+| String 
+| 
+|  
+
+| submitted
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#RenderingProvider]
+=== _RenderingProvider_ RenderingProvider
+
+
+
+[.fields-RenderingProvider]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| facilityName
+| 
+| String 
+| 
+|  
+
+| firstName
+| 
+| String 
+| 
+|  
+
+| gender
+| 
+| String 
+| 
+|  
+
+| id
+| 
+| String 
+| 
+|  
+
+| key
+| 
+| String 
+| 
+|  
+
+| lastName
+| 
+| String 
+| 
+|  
+
+| licenceNumber
+| 
+| String 
+| 
+|  
+
+| middleName
+| 
+| String 
+| 
+|  
+
+| network
+| 
+| String 
+| 
+|  
+
+| npi
+| 
+| String 
+| 
+|  
+
+| participationCode
+| 
+| String 
+| 
+|  
+
+| participationCodeDescription
+| 
+| String 
+| 
+|  
+
+| phoneNumber
+| 
+| String 
+| 
+|  
+
+| practiceLocationId
+| 
+| String 
+| 
+|  
+
+| practiceLocationName
+| 
+| String 
+| 
+|  
+
+| practiceType
+| 
+| String 
+| 
+|  
+
+| suppressed
+| 
+| Boolean 
+| 
+|  
+
+| taxId
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#ServiceError]
+=== _ServiceError_ ServiceError
+
+
+
+[.fields-ServiceError]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| debugMessage
+| 
+| String 
+| 
+|  
+
+| errorCode
+| 
+| String 
+| 
+|  
+
+| message
+| 
+| String 
+| 
+|  
+
+| validationErrors
+| 
+| List  of <<ServiceValidationError>>
+| 
+|  
+
+|===
+
+
+[#ServiceLine]
+=== _ServiceLine_ ServiceLine
+
+
+
+[.fields-ServiceLine]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| accountsPayableCode
+| 
+| String 
+| 
+|  
+
+| amount
+| 
+| Amount 
+| 
+|  
+
+| areaOfCavity
+| 
+| String 
+| 
+|  
+
+| areaOfCavityDescription
+| 
+| String 
+| 
+|  
+
+| deniedCode
+| 
+| String 
+| 
+|  
+
+| deniedCodeDescription
+| 
+| String 
+| 
+|  
+
+| diagnosticCodes
+| 
+| String 
+| 
+|  
+
+| diagnosticCodesDescriptions
+| 
+| String 
+| 
+|  
+
+| explanationCodes
+| 
+| List  of <<ExplanationCode>>
+| 
+|  
+
+| lineId
+| 
+| String 
+| 
+|  
+
+| paymentSentDate
+| 
+| String 
+| 
+|  
+
+| procedureCode
+| 
+| String 
+| 
+|  
+
+| procedureCodeDescription
+| 
+| String 
+| 
+|  
+
+| procedureCodeShortDescription
+| 
+| String 
+| 
+|  
+
+| processedDate
+| 
+| String 
+| 
+|  
+
+| sequenceNumber
+| 
+| String 
+| 
+|  
+
+| serviceDate
+| 
+| String 
+| 
+|  
+
+| serviceQuantity
+| 
+| String 
+| 
+|  
+
+| statusCode
+| 
+| String 
+| 
+|  
+
+| statusCodeDescription
+| 
+| String 
+| 
+|  
+
+| statusDate
+| 
+| String 
+| 
+|  
+
+| statusIndicator
+| 
+| String 
+| 
+|  
+
+| statusIndicatorDescription
+| 
+| String 
+| 
+|  
+
+| toothCode
+| 
+| String 
+| 
+|  
+
+| toothCodeDescription
+| 
+| String 
+| 
+|  
+
+| toothSurfaces
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#ServiceValidationError]
+=== _ServiceValidationError_ ServiceValidationError
+
+
+
+[.fields-ServiceValidationError]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| field
+| 
+| String 
+| 
+|  
+
+| message
+| 
+| String 
+| 
+|  
+
+| object
+| 
+| String 
+| 
+|  
+
+| rejectedValue
+| 
+| Object 
+| 
+|  
+
+|===
+
+
+[#Subscriber]
+=== _Subscriber_ Subscriber
+
+
+
+[.fields-Subscriber]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| birthDate
+| 
+| String 
+| 
+|  
+
+| divisionName
+| 
+| String 
+| 
+|  
+
+| divisionNumber
+| 
+| String 
+| 
+|  
+
+| divisionSelfFunded
+| 
+| Boolean 
+| 
+|  
+
+| firstName
+| 
+| String 
+| 
+|  
+
+| groupName
+| 
+| String 
+| 
+|  
+
+| groupNumber
+| 
+| String 
+| 
+|  
+
+| id
+| 
+| String 
+| 
+|  
+
+| lastName
+| 
+| String 
+| 
+|  
+
+| middleName
+| 
+| String 
+| 
+|  
+
+| personId
+| 
+| String 
+| 
+|  
+
+|===
+
+
